@@ -1,0 +1,5 @@
+Do not forget to export the path to the affdex libraries.
+Run example:
+
+export LD_LIBRARY_PATH=$(pwd)/external/affdex/lib
+./affdexCrash
