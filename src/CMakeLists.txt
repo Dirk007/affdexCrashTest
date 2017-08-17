@@ -1,11 +1,5 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
 
-if (CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    message(STATUS "Setting Ubuntu ABI compatibility")
-    # Why-So-Ever this has to be done
-    add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
-endif()
-
 find_library(Affdex_LIBRARY
         NAMES libaffdex-native.so
         HINTS ${CMAKE_CURRENT_SOURCE_DIR}/../external/affdex/lib REQUIRED)

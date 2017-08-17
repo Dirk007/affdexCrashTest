@@ -28,7 +28,7 @@ namespace {
         {
             std::cout << "Setting data path to " << AFFDEX_DATA << std::endl;
             if (!boost::filesystem::exists(AFFDEX_DATA)) {
-                throw(std::runtime_error({"Affdex data-directory does not exist!"}));
+                throw(std::runtime_error("Affdex data-directory does not exist!"));
             }
 
             frameDetector_.setClassifierPath(AFFDEX_DATA);
