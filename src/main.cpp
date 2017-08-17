@@ -1,6 +1,7 @@
 #include <chrono>
 #include <exception>
 #include <iostream>
+#include <memory>
 
 #include <boost/asio.hpp>
 #include <boost/asio/steady_timer.hpp>
@@ -22,6 +23,12 @@ namespace {
             , feedTimer_(ioService_)
             , frameDetector_(1)
         {
+            std::cout << __func__ << std::endl;
+        }
+
+        ~AffdexTester()
+        {
+            std::cout << __func__ << std::endl;
         }
 
         void start()
@@ -74,37 +81,37 @@ namespace {
         /// FaceListener
         void onFaceFound(float timestamp, affdex::FaceId faceId) override
         {
-            std::cout << __func__;
+            std::cout << __func__ << std::endl;
         }
 
         /// FaceListener
         void onFaceLost(float timestamp, affdex::FaceId faceId) override
         {
-            std::cout << __func__;
+            std::cout << __func__ << std::endl;
         }
 
         /// ImageListener
         void onImageResults(std::map<affdex::FaceId, affdex::Face> faces, affdex::Frame image) override
         {
-            std::cout << __func__;
+            std::cout << __func__ << std::endl;
         }
 
         /// ImageListener
         void onImageCapture(affdex::Frame image) override
         {
-            std::cout << __func__;
+            std::cout << __func__ << std::endl;
         }
 
         /// ProcessStatusListener
         void onProcessingException(affdex::AffdexException ex) override
         {
-            std::cout << __func__;
+            std::cout << __func__ << std::endl;
         }
 
         /// ProcessStatusListener
         void onProcessingFinished() override
         {
-            std::cout << __func__;
+            std::cout << __func__ << std::endl;
         }
 
         boost::asio::io_service& ioService_;
@@ -115,13 +122,19 @@ namespace {
 
 int main(int argc, char *argv[])
 {
+    std::cout << __func__ << std::endl;
     try {
         boost::asio::io_service ioService;
 
-        AffdexTester tester(ioService);
-        tester.start();
+        std::cout << "Constructing AffdexTester..." << std::endl;
+        auto tester = std::make_shared<AffdexTester>(ioService);
+        std::cout << "Starting AffdexTester..." << std::endl;
+        tester->start();
 
+        std::cout << "Running ioService..." << std::endl;
         ioService.run();
+
+        std::cout << "ioService exited." << std::endl;
     }
     catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
